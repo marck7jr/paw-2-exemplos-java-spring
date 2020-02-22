@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import br.ufmt.webii.dweb2.dao.ClienteDAO;
+import br.ufmt.webii.dweb2.dao.EstadoDAO;
 import br.ufmt.webii.dweb2.models.Cliente;
 
 @Controller
@@ -20,10 +21,14 @@ public class ClienteController {
     @Autowired
     private ClienteDAO dao;
 
+    @Autowired
+    private EstadoDAO estadoDao;
+
     @GetMapping
     public String index(Model model) {
         model.addAttribute("cliente", cliente);
         model.addAttribute("lista", dao.findAll());
+        model.addAttribute("estados", estadoDao.findAll());
 
         return "cliente";
     }
@@ -39,6 +44,7 @@ public class ClienteController {
         Cliente edit = dao.findById(pk).get();
         model.addAttribute("cliente", edit);
         model.addAttribute("lista", dao.findAll());
+        model.addAttribute("estados", estadoDao.findAll());
 
         return "cliente";
     }
